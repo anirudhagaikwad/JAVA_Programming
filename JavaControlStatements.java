@@ -40,6 +40,40 @@ public class JavaControlStatements {
      JavaControlStatements obj=new JavaControlStatements();
      obj.switchDemo1(5);
      obj.switchDemo2(2000, 2);
+     obj.forLoop(5);
+     int[] arr= {55,33,44,66};
+     obj.forEachLoop(arr);
+     obj.whileLoop(6);
+     obj.doWhileLoop(7);
+	}
+	
+// Loops	
+	void forLoop(int a) {
+		for(int i=1;i<10;i++) {
+			System.out.println(i+"X"+a+"="+(i*a));
+		}
+	}
+	
+	void forEachLoop(int[] arr) {
+		for(int i:arr) {
+			System.out.println("Array Element is : "+i);
+		}
+	}
+	
+	void whileLoop(int a) {
+		int i =1;
+		while(i<10) {
+			System.out.println(i+"X"+a+"="+(i*a));
+			i++;
+		}
+	}
+	
+	void doWhileLoop(int a) {
+		int i=1;
+		do {
+			System.out.println(i+"X"+a+"="+(i*a));
+			i++;
+		}while(i<10);
 	}
 
 }
