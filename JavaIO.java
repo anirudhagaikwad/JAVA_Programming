@@ -2,6 +2,8 @@ package corejava;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.Console;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -112,6 +115,38 @@ void scannerSum() throws FileNotFoundException {
 	System.out.println("Sum = "+sum);
 }//scannerSum()
 
+void standard_console_stream() {
+	/*Password verify, change */
+	Console obj=System.console();
+	if(obj==null) {
+		System.err.println("Not Found Console...."); //standard stream
+		System.exit(1);
+	}
+	String username=obj.readLine("Enter your username : ");
+	char[] oldPassword=obj.readPassword("Enter your Old Password : ");
+	if(verify(username,oldPassword)) {
+		boolean noMatch;
+		do {
+			char[] newPasswd1=obj.readPassword("Enter new Password : ");
+			char[] newPasswd2=obj.readPassword("Enter new Password again : ");
+			noMatch=!Arrays.equals(newPasswd1,newPasswd2);
+			if(noMatch) {
+				obj.format("Password not match ... Try again %n");
+			}else {changePasswd(username,newPasswd1);
+			obj.format("Password for %s changed %n",username);}
+			Arrays.fill(newPasswd1,' ');
+			Arrays.fill(newPasswd2,' ');
+		}while(noMatch);
+	} Arrays.fill(oldPassword,' ');
+}//standard_console_stream()
+
+boolean verify(String username,char[] passwd) {
+	//Dummy method, you can create logic to verify user
+	return true;
+}//verify
+void changePasswd(String username,char[] passwd) {
+	//Dummy method,you can create logic to change password
+}//changePasswd()
 	public static void main(String[] args) {
 		JavaIO obj=new JavaIO();
 		//obj.readConsoleInput();
@@ -124,13 +159,54 @@ void scannerSum() throws FileNotFoundException {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-		try {
+		/*try {
 			obj.scannerSum();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
+		//obj.standard_console_stream();
+		//obj.createFile("test.txt");
+		//obj.readWriteFile();
+		obj.methodsForManuplateFileDir();
 
 	}//main()
+	
+void createFile(String fileName) {
+	try{
+		File obj=new File("/home/anirudha/eclipse-workspace/LPU_Java/src/corejava/"+fileName);
+		if(obj.createNewFile()) {
+			System.out.println("File created : "+obj.getName());
+		}else {System.out.println("File already exists... "+obj.getName());}
+	}
+	catch(IOException e) {e.printStackTrace();}
+}//createFile()
 
+void readWriteFile() {
+	try {
+		FileWriter out=new FileWriter("/home/anirudha/eclipse-workspace/LPU_Java/src/corejava/test.txt");
+		out.write("Java going to increase price ");
+		out.close();
+		File obj=new File("/home/anirudha/eclipse-workspace/LPU_Java/src/corejava/test.txt");
+		Scanner scObj=new Scanner(obj);
+		while(scObj.hasNextLine()) {
+			String str=scObj.nextLine();
+			System.out.println(str);
+		}
+		scObj.close();
+	}catch(IOException e) {e.printStackTrace();}
+}//readWriteFile()
+
+void methodsForManuplateFileDir() {
+	File obj=new File("/home/anirudha/eclipse-workspace/LPU_Java/src/corejava/test.txt");
+	if(obj.exists()) {
+		System.out.println("is File Executable : "+obj.canExecute());
+		System.out.println("is File Readable : "+obj.canRead());
+		System.out.println("is File Writable : "+obj.canWrite());
+		System.out.println("is File Name : "+obj.getName());
+		System.out.println("is File Path : "+obj.getAbsolutePath());
+		System.out.println("is File Size in bytes : "+obj.length());
+		//obj.delete();
+	}
+}
 }//JavaIO
